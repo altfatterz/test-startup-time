@@ -1,3 +1,6 @@
+```bash
+mvn clean package
+```
 
 ```bash
 java -noverify -XX:TieredStopAtLevel=1 -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
