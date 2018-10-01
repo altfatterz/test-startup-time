@@ -17,6 +17,8 @@ mvn dockerfile:build
 docker run altfatterz/test-startup-time
 ```
 
+By default without docker startup is around 2 seconds, however within Docker container is around 4 seconds...
+
 
 
 Resources:
