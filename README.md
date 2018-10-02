@@ -7,26 +7,17 @@ java -noverify -XX:TieredStopAtLevel=1 -jar target/test-startup-time-0.0.1-SNAPS
 ```
 
 ```
-Started TestStartupTimeApplication in 1.548 seconds (JVM running for 1.98)
-
+Started TestStartupTimeApplication in 2.157 seconds (JVM running for 2.565)
 ```
 
 ```bash
-mvn dockerfile:build
-
-docker run altfatterz/test-startup-time
+mvn clean package dockerfile:build
+docker run -p 8080:8080 altfatterz/test-startup-time
 ```
 
-By default without docker startup is around 2 seconds, however within Docker container is around 4 seconds...
-
-
-
-Resources:
-
-https://github.com/spotify/dockerfile-maven
-https://github.com/dsyer/spring-boot-micro-apps/
-
-
+```
+Started TestStartupTimeApplication in 3.093 seconds (JVM running for 3.74)
+```
 
 # Running with Kubernetes
 
@@ -101,5 +92,24 @@ The `NodePort` is set by the cluster automatically.
 minikube service demo
 ```
 Opens up in a browser: http://192.168.99.100:30706/
+
+
+8. Restart a pod
+
+```bash
+kubectl get pods
+kubectl delete pod test-startup-time-6d99f46548-wddvq
+
+kubectl get pods
+NAME                                 READY     STATUS        RESTARTS   AGE
+test-startup-time-6d99f46548-m5mnn   1/1       Running       0          8s
+test-startup-time-6d99f46548-wddvq   0/1       Terminating   0          12m
+```
+
+Resources:
+
+https://github.com/spotify/dockerfile-maven
+https://github.com/dsyer/spring-boot-micro-apps/
+http://dolszewski.com/spring/faster-spring-boot-startup/
 
 
