@@ -106,6 +106,14 @@ test-startup-time-6d99f46548-m5mnn   1/1       Running       0          8s
 test-startup-time-6d99f46548-wddvq   0/1       Terminating   0          12m
 ```
 
+
+
+```bash
+java -XX:+PrintFlagsFinal -version
+```
+
+
+
 Resources:
 
 https://github.com/spotify/dockerfile-maven
