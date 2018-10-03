@@ -3,7 +3,7 @@ mvn clean package
 ```
 
 ```bash
-java -noverify -XX:TieredStopAtLevel=1 -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
+java -noverify -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:TieredStopAtLevel=1 -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
 ```
 
 ```
@@ -133,5 +133,5 @@ Resources:
 https://github.com/spotify/dockerfile-maven
 https://github.com/dsyer/spring-boot-micro-apps/
 http://dolszewski.com/spring/faster-spring-boot-startup/
-
+https://blog.shanelee.name/2017/07/15/jvm-microservice-with-spring-boot-docker-and-kubernetes/
 
