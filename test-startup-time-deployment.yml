@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-startup-time
+spec:
+  selector:
+    app: test-startup-time
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 30001
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-startup-time
+spec:
+  selector:
+    matchLabels:
+      app: test-startup-time
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: test-startup-time
+    spec:
+      containers:
+      - name: test-startup-time
+        image: altfatterz/test-startup-time:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080

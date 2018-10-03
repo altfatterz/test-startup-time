@@ -106,12 +106,26 @@ test-startup-time-6d99f46548-m5mnn   1/1       Running       0          8s
 test-startup-time-6d99f46548-wddvq   0/1       Terminating   0          12m
 ```
 
+9. Cleanup
+
+```bash
+kubectl delete services test-startup-time
+kubectl delete deployment test-startup-time
+```
+
+
+10. Using the `test-startup-time-deployment.yml`
+
+```bash
+kubectl create -f test-startup-time-deployment.yml
+```
+
+
 
 
 ```bash
 java -XX:+PrintFlagsFinal -version
 ```
-
 
 
 Resources:
