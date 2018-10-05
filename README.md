@@ -4,7 +4,7 @@ Analyzing startup time of a very simple Spring Boot app running
 - using `Docker` 
 - using `Kubernetes` (minikube)
 
-The app is using recommendations from Dave Syer (@david_syer) to make it start faster. See [https://twitter.com/ntschutta/status/1045326765437202432](https://twitter.com/ntschutta/status/1045326765437202432)  
+The app is using recommendations from Dave Syer ([@david_syer](https://twitter.com/david_syer)) to make it start faster. See [https://twitter.com/ntschutta/status/1045326765437202432](https://twitter.com/ntschutta/status/1045326765437202432)  
 The app is using [Undertow](http://undertow.io/)
 
 #### 1. Clone and build:
@@ -70,7 +70,7 @@ It turns out to be a bit slower compared to the docker environment from `Docker 
 ```bash
 docker run -p 8080:8080 altfatterz/test-startup-time
 ...
-2018-10-05 08:27:22.257  INFO 1 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 2.607 seconds (JVM running for 3.03)
+Started TestStartupTimeApplication in 2.607 seconds (JVM running for 3.03)
 ``` 
 
 5. Create a Deployment with a single pod.
@@ -84,7 +84,7 @@ Similar startup time:
 ```bash
 kubectl logs test-startup-time-f97f5bcd-sbkms
 
-2018-10-05 08:46:21.032  INFO 1 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 2.87 seconds (JVM running for 3.332)
+Started TestStartupTimeApplication in 2.87 seconds (JVM running for 3.332)
 ```
 
 6. Create a Deployment with 3 pods
@@ -100,7 +100,8 @@ kubectl create -f test-startup-time-3-deployment.yml
 
 ```bash
 kubectl logs test-startup-time-f97f5bcd-hd948
-2018-10-05 08:49:40.668  INFO 1 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 7.702 seconds (JVM running for 8.847)
+...
+Started TestStartupTimeApplication in 7.702 seconds (JVM running for 8.847)
 ```
 
 Interesting that the time now increased almost to 3 times.
