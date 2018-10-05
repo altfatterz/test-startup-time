@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-startup-time
+spec:
+  selector:
+    app: test-startup-time
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 30001
+  type: NodePort
