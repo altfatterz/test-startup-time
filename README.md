@@ -1,13 +1,24 @@
+Playing with startup time of a very simple Spring Boot app running `java -jar`, `Docker` and with `Kubernetes`
+The app is using recommendations from Dave Syer (@david_syer) to make it start faster. See [https://twitter.com/ntschutta/status/1045326765437202432](https://twitter.com/ntschutta/status/1045326765437202432)  
+The app is using [Undertow](http://undertow.io/)
+
+1. Clone and build:
+
 ```bash
+git clone https://github.com/altfatterz/test-startup-time
+cd test-startup-time
 mvn clean package
 ```
 
+2. Simple `java -jar` run:
 ```bash
 java -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
 
 ...
 2018-10-05 10:02:11.744  INFO 64642 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 3.444 seconds (JVM running for 4.038)
 ```
+
+3. Improve the startup time:
 
 ```bash
 java -noverify -XX:TieredStopAtLevel=1 -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
