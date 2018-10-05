@@ -1,8 +1,13 @@
-Playing with startup time of a very simple Spring Boot app running `java -jar`, `Docker` and with `Kubernetes`
+Analyzing startup time of a very simple Spring Boot app running 
+
+- using `java -jar`, 
+- using `Docker` 
+- using `Kubernetes` (minikube)
+
 The app is using recommendations from Dave Syer (@david_syer) to make it start faster. See [https://twitter.com/ntschutta/status/1045326765437202432](https://twitter.com/ntschutta/status/1045326765437202432)  
 The app is using [Undertow](http://undertow.io/)
 
-1. Clone and build:
+#### 1. Clone and build:
 
 ```bash
 git clone https://github.com/altfatterz/test-startup-time
@@ -10,26 +15,23 @@ cd test-startup-time
 mvn clean package
 ```
 
-2. Simple `java -jar` run:
+#### 2. Simple `java -jar` run:
 ```bash
 java -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
 
 ...
-2018-10-05 10:02:11.744  INFO 64642 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 3.444 seconds (JVM running for 4.038)
+Started TestStartupTimeApplication in 3.444 seconds (JVM running for 4.038)
 ```
 
-3. Improve the startup time:
+#### 3. Improve the startup time:
 
 ```bash
 java -noverify -XX:TieredStopAtLevel=1 -jar target/test-startup-time-0.0.1-SNAPSHOT.jar
-```
 ...
-2018-10-05 10:04:25.233  INFO 64751 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 2.411 seconds (JVM running for 2.828)
-```
-Started TestStartupTimeApplication in 2.157 seconds (JVM running for 2.565)
+Started TestStartupTimeApplication in 2.411 seconds (JVM running for 2.828)
 ```
 
-Using `Docker for Mac` with `ENTRYPOINT` (see `Dockerfile`) 
+#### 4. Using `Docker for Mac` with `ENTRYPOINT` (see `Dockerfile`) 
 ```bash
 ENTRYPOINT [ "java", "-noverify", "-XX:TieredStopAtLevel=1", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-jar", "/app.jar"]
 ```
@@ -38,18 +40,18 @@ ENTRYPOINT [ "java", "-noverify", "-XX:TieredStopAtLevel=1", "-XX:+UnlockExperim
 mvn clean package dockerfile:build
 docker run -p 8080:8080 altfatterz/test-startup-time
 ...
-2018-10-05 08:23:49.686  INFO 1 --- [           main] c.e.t.TestStartupTimeApplication         : Started TestStartupTimeApplication in 2.172 seconds (JVM running for 2.538)
+Started TestStartupTimeApplication in 2.172 seconds (JVM running for 2.538)
 ```
 
-# Running with Kubernetes using minikube
+#### 5. Running with Kubernetes using minikube
 
-1. Start minikube 
+1. First start minikube: 
 
 ```bash
 minikube start --memory 4096
 ```
 
-2. Reusing  the Docker daemon
+2. Reuse the Docker daemon:
 
 ```bash
 eval $(minikube docker-env)
@@ -61,8 +63,9 @@ eval $(minikube docker-env)
 mvn clean package dockerfile:build
 ```
 
-4. Run it first using the Docker environment from `minikube`. 
-Turns out to be a bit slower compared to the docker environment from `Docker for Mac`
+4. Run it first using the Docker environment from `minikube`.
+ 
+It turns out to be a bit slower compared to the docker environment from `Docker for Mac`
 
 ```bash
 docker run -p 8080:8080 altfatterz/test-startup-time
@@ -102,10 +105,9 @@ kubectl logs test-startup-time-f97f5bcd-hd948
 
 Interesting that the time now increased almost to 3 times.
 
-Tweeking compute and resources for containers:
+Next tweeking compute and resources for containers:
 
 https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-
 
 Resources:
 
