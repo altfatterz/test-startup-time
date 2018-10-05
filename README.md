@@ -102,6 +102,9 @@ kubectl logs test-startup-time-f97f5bcd-hd948
 
 Interesting that the time now increased almost to 3 times.
 
+Tweeking compute and resources for containers:
+
+https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 
 
 Resources:
