@@ -104,11 +104,54 @@ kubectl logs test-startup-time-f97f5bcd-hd948
 Started TestStartupTimeApplication in 7.702 seconds (JVM running for 8.847)
 ```
 
-Interesting that the time now increased almost to 3 times.
+Interesting that the time now increased almost to 3 times. 
 
-Next tweeking compute and resources for containers:
+#### 5 Tweaking the CPU and memory options
 
-https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+1. Let's re-create the `minikube` environment:
+
+```bash
+minikube stop
+minikube delete && rm -rf ~/.minikube && rm -rf ~/.kube 
+minikube start --memory 4096 --cpus 4
+```
+
+and with the following config in `test-startup-time-deployment.yml`
+
+```yaml
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: 2
+```
+
+a single pod will start under 3 seconds.
+
+```
+Started TestStartupTimeApplication in 2.987 seconds (JVM running for 3.585)
+```
+
+More details about managing the CPU and memory configuration you can find [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container).
+
+2. Let's create 3 pods with the previous configuration:
+
+```bash
+kubectl create -f test-startup-time-3-pods-deployment.yml
+```
+
+We can see that the only one pods is started, two of them will be indefinitely in `Pending` state, since we don't have 2 cpu resources for each pod.
+
+```
+NAME                                READY     STATUS    RESTARTS   AGE
+test-startup-time-6fc6b7f99-5s5ft   1/1       Running   0          33s
+test-startup-time-6fc6b7f99-n556d   0/1       Pending   0          33s
+test-startup-time-6fc6b7f99-z5m95   0/1       Pending   0          33s
+```
+
+If we lower the `cpu` to 1.5 then two pods would have been in `Running` state and only one in `Pending`  
+
+
+
 
 Resources:
 

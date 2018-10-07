@@ -15,6 +15,10 @@ spec:
       containers:
       - name: test-startup-time
         image: altfatterz/test-startup-time:latest
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: 2
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
